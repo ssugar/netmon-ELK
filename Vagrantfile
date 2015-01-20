@@ -12,6 +12,8 @@ echo "deb http://mirror-fpt-telecom.fpt.net/ubuntu/ precise-updates main restric
 echo "deb http://mirror-fpt-telecom.fpt.net/ubuntu/ precise-security main restricted universe" >> /etc/apt/sources.list
 apt-get update
 apt-get install curl -y
+apt-get install nano -y
+apt-get install softflowd -y
 apt-get install nginx -y
 apt-get install openjdk-7-jdk -y
 cd /home/vagrant
@@ -28,13 +30,16 @@ SCRIPT
 $script2 = <<SCRIPT
 cp /home/vagrant/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml
 cp /home/vagrant/logstash.conf /etc/logstash/conf.d/logstash.conf
+cp /home/vagrant/softflowd /etc/default/softflowd
 cp /home/vagrant/drayteksyslog.json /usr/share/nginx/www/kibana/app/dashboards/default.json
+cp /home/vagrant/netflow.json /usr/share/nginx/www/kibana/app/dashboards/netflow.json
 cd /usr/share/elasticsearch
 bin/plugin -install lukas-vlcek/bigdesk
 cd /home/vagrant
 service nginx restart
 service logstash restart
 service elasticsearch restart
+service softflowd restart
 SCRIPT
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
@@ -54,7 +59,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
    #copy a few config files into their place post install
    config.vm.provision "file", source: "./cookbooks/ss_logstash/files/default/logstash.conf", destination: "/home/vagrant/logstash.conf"
+   config.vm.provision "file", source: "./cookbooks/ss_softflowd/files/default/softflowd.conf", destination: "/home/vagrant/softflowd"   
    config.vm.provision "file", source: "./cookbooks/ss_kibana/files/default/elasticsearch.yml", destination: "/home/vagrant/elasticsearch.yml"
+   config.vm.provision "file", source: "./cookbooks/ss_kibana/files/default/netflow.json", destination: "/home/vagrant/netflow.json"
    config.vm.provision "file", source: "./cookbooks/ss_kibana/files/default/drayteksyslog.json", destination: "/home/vagrant/drayteksyslog.json"
 
    #restart the services we just replaced configs for
