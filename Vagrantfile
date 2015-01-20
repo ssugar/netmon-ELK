@@ -47,7 +47,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    #Set the virtual machine 'box' to use
    config.vm.box = "hashicorp/precise64"
    #Set the vm name
-   config.vm.define :netmon-ELK do |t|
+   config.vm.define :netmonELK do |t|
    end
    
    #copy the ELK installer files locally to save time
