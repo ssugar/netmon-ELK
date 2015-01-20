@@ -39,8 +39,14 @@ cd /home/vagrant
 service nginx restart
 service logstash restart
 service elasticsearch restart
+service softflowd stop
+service softflowd start
+SCRIPT
+
+$script3 = <<SCRIPT
 service softflowd restart
 SCRIPT
+
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    #Set the virtual machine 'box' to use
@@ -68,6 +74,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    config.vm.provision "shell", inline: $script2
    
    #run a shell script that updates the elasticsearch mappings for proper viewing in elasticsearch (kibana) queries
-   config.vm.provision "shell", path: "updatedEsMappings.sh"
+   #config.vm.provision "shell", path: "updatedEsMappings.sh"
+   config.vm.provision "shell", inline: $script3
    
 end
