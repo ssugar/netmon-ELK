@@ -325,7 +325,16 @@
             "font-size": "9pt"
           },
           "overflow": "min-height",
-          "fields": [],
+          "fields": [
+            "netflow.flow_seq_num",
+            "netflow.in_bytes",
+            "netflow.in_pkts",
+            "netflow.ipv4_dst_addr",
+            "netflow.ipv4_src_addr",
+            "netflow.l4_dst_port",
+            "netflow.l4_src_port",
+            "netflow.tcp_flags"
+          ],
           "highlight": [],
           "sortable": true,
           "header": true,
@@ -338,7 +347,7 @@
               1
             ]
           },
-          "field_list": true,
+          "field_list": false,
           "status": "Stable",
           "trimFactor": 300,
           "normTimes": true,
