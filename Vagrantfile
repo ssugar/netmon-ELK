@@ -13,7 +13,6 @@ echo "deb http://mirror-fpt-telecom.fpt.net/ubuntu/ precise-security main restri
 apt-get update
 apt-get install curl -y
 apt-get install nano -y
-apt-get install softflowd -y
 apt-get install nginx -y
 apt-get install openjdk-7-jdk -y
 cd /home/vagrant
@@ -25,12 +24,15 @@ service logstash restart
 tar -xvzf kibana-latest.tar.gz
 cp -R kibana-latest /usr/share/nginx/www/kibana
 service elasticsearch restart
+apt-get install softflowd -y
+service softflowd stop
+cp /home/vagrant/softflowd /etc/default/softflowd
+service softflowd start
 SCRIPT
 
 $script2 = <<SCRIPT
 cp /home/vagrant/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml
 cp /home/vagrant/logstash.conf /etc/logstash/conf.d/logstash.conf
-cp /home/vagrant/softflowd /etc/default/softflowd
 cp /home/vagrant/drayteksyslog.json /usr/share/nginx/www/kibana/app/dashboards/default.json
 cp /home/vagrant/netflow.json /usr/share/nginx/www/kibana/app/dashboards/netflow.json
 cd /usr/share/elasticsearch
@@ -39,12 +41,6 @@ cd /home/vagrant
 service nginx restart
 service logstash restart
 service elasticsearch restart
-service softflowd stop
-service softflowd start
-SCRIPT
-
-$script3 = <<SCRIPT
-service softflowd restart
 SCRIPT
 
 
@@ -59,13 +55,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    config.vm.provision "file", source: "./localELK/elasticsearch-1.4.2.deb", destination: "/home/vagrant/elasticsearch-1.4.2.deb"
    config.vm.provision "file", source: "./localELK/logstash-1.4.2-1.deb", destination: "/home/vagrant/logstash-1.4.2-1.deb"
    config.vm.provision "file", source: "./localELK/kibana-latest.tar.gz", destination: "/home/vagrant/kibana-latest.tar.gz"
+   config.vm.provision "file", source: "./cookbooks/ss_softflowd/files/default/softflowd.conf", destination: "/home/vagrant/softflowd"   
    
    #run the script above
    config.vm.provision "shell", inline: $script
 
    #copy a few config files into their place post install
    config.vm.provision "file", source: "./cookbooks/ss_logstash/files/default/logstash.conf", destination: "/home/vagrant/logstash.conf"
-   config.vm.provision "file", source: "./cookbooks/ss_softflowd/files/default/softflowd.conf", destination: "/home/vagrant/softflowd"   
    config.vm.provision "file", source: "./cookbooks/ss_kibana/files/default/elasticsearch.yml", destination: "/home/vagrant/elasticsearch.yml"
    config.vm.provision "file", source: "./cookbooks/ss_kibana/files/default/netflow.json", destination: "/home/vagrant/netflow.json"
    config.vm.provision "file", source: "./cookbooks/ss_kibana/files/default/drayteksyslog.json", destination: "/home/vagrant/drayteksyslog.json"
@@ -75,6 +71,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    
    #run a shell script that updates the elasticsearch mappings for proper viewing in elasticsearch (kibana) queries
    #config.vm.provision "shell", path: "updatedEsMappings.sh"
-   config.vm.provision "shell", inline: $script3
    
 end
