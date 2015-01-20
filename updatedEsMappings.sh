@@ -1,6 +1,6 @@
 #!/bin/bash
 
-curl -XPUT http://localhost:9200/_template/logstash_per_index -d '{
+curl -4 -v -XPUT http://0.0.0.0:9200/_template/logstash_per_index -d '{
     "template" : "logstash*",
     "settings": {
       "index.cache.field.type": "soft",
