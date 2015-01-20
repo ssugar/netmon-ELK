@@ -1,30 +1,13 @@
-#senseHCMC-ELK#
+#netmon-ELK#
 
 ##Description##
-Vagrantfile and Chef recipes to deploy the ELK stack [Elasticsearch, Logstash, and Kibana](http://www.elasticsearch.org/overview/) for use in the senseHCMC project.
+Vagrantfile and Chef recipes to deploy the ELK stack [Elasticsearch, Logstash, and Kibana](http://www.elasticsearch.org/overview/) for use as a Netmon and Syslog analysis tool.
 
 ===================================
 ##Setup without Vagrant##
 If not using Vagrant and Chef, run the following commands on a fresh debian/ubuntu install after logging in as root to mimic the same behaviour:
 
 ###Prepare Apt###
-  We will be setting apt to use a mirror located in Vietnam.
-  
-  Example 1 - Debian Wheezy
-  -------------------------
-  
-    echo "deb http://mirror.debian.vn/debian/ wheezy main restricted universe" > /etc/apt/sources.list
-    echo "deb http://mirror.debian.vn/debian/ wheezy-updates main restricted universe" >> /etc/apt/sources.list
-    echo "deb http://mirror.debian.vn/debian/ wheezy-security main restricted universe" >> /etc/apt/sources.list
-	
-  Example 2 - Ubuntu Precise Pangolin
-  -----------------------------------
-
-    echo "deb http://mirror-fpt-telecom.fpt.net/ubuntu/ precise main restricted universe" > /etc/apt/sources.list
-    echo "deb http://mirror-fpt-telecom.fpt.net/ubuntu/ precise-updates main restricted universe" >> /etc/apt/sources.list
-    echo "deb http://mirror-fpt-telecom.fpt.net/ubuntu/ precise-security main restricted universe" >> /etc/apt/sources.list
-  
-  Update apt after changing sources
   
 	apt-get update
 
@@ -63,19 +46,5 @@ If not using Vagrant and Chef, run the following commands on a fresh debian/ubun
     http://server_ip/kibana
 ===================================
 ##Testing##
-###sendData.py script###
-  This will send a json formatted string over UDP with six random data points, one for each of the six testing sensors, into Logstash.  Cron job below will run this script once every minute.
-
-  Copy the sendData.py file available in this project at: [testing/sendData.py](testing/sendData.py) to the server, then create a cronjob replacing /path/to/sendData.py with your path:
- 
-    crontab -l | { cat; echo "* * * * * python /path/to/sendData.py"; } | crontab -   
-  This testing script could be be easily modified to run from a different machine, use a different port, or even a different protocol.
-
-###Basic 6 Sensor Kibana Dashboard###
-  This will set a basic 6 sensor dashboard as the default dasboard in Kibana.  This dashboard was based off of data created by the testing script above, so it will require changes when the sensor names are chosen.
-
-  Copy the senseHCMCDashboard.json file available in this project at: 
-  [cookbooks/ss_kibana/files/default/senseHCMCDashboard.json](cookbooks/ss_kibana/files/default/senseHCMCDashboard.json) 
-  to: 
-  /usr/share/nginx/www/kibana/app/dashboards/default.json
+###softflow testing###
 
