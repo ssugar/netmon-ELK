@@ -229,7 +229,7 @@
         },
         {
           "error": false,
-          "span": 6,
+          "span": 5,
           "editable": true,
           "type": "map",
           "loadingEditor": false,
@@ -262,7 +262,7 @@
       "panels": [
         {
           "error": false,
-          "span": 4,
+          "span": 3,
           "editable": true,
           "type": "map",
           "loadingEditor": false,
