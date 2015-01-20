@@ -28,7 +28,7 @@ SCRIPT
 $script2 = <<SCRIPT
 cp /home/vagrant/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml
 cp /home/vagrant/logstash.conf /etc/logstash/conf.d/logstash.conf
-cp /home/vagrant/senseHCMCDashboard.json /usr/share/nginx/www/kibana/app/dashboards/default.json
+cp /home/vagrant/drayteksyslog.json /usr/share/nginx/www/kibana/app/dashboards/default.json
 cd /usr/share/elasticsearch
 bin/plugin -install lukas-vlcek/bigdesk
 cd /home/vagrant
@@ -47,7 +47,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    #Set the virtual machine 'box' to use
    config.vm.box = "hashicorp/precise64"
    #Set the vm name
-   config.vm.define :elkStack2 do |t|
+   config.vm.define :netmon-ELK do |t|
    end
    
    #copy the ELK installer files locally to save time
@@ -61,8 +61,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    #copy a few config files into their place post install
    config.vm.provision "file", source: "./cookbooks/ss_logstash/files/default/logstash.conf", destination: "/home/vagrant/logstash.conf"
    config.vm.provision "file", source: "./cookbooks/ss_kibana/files/default/elasticsearch.yml", destination: "/home/vagrant/elasticsearch.yml"
-   config.vm.provision "file", source: "./cookbooks/ss_kibana/files/default/senseHCMCDashboard.json", destination: "/home/vagrant/senseHCMCDashboard.json"
-   config.vm.provision "file", source: "./testing/sendData.py", destination: "/home/vagrant/sendData.py"
+   config.vm.provision "file", source: "./cookbooks/ss_kibana/files/default/drayteksyslog.json", destination: "/home/vagrant/drayteksyslog.json"
 
    #restart the services we just replaced configs for
    config.vm.provision "shell", inline: $script2
