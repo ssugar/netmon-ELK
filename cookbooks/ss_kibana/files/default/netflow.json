@@ -23,11 +23,50 @@
           "type": "lucene",
           "enable": true,
           "query": "*"
+        },
+        "2": {
+          "id": 2,
+          "type": "topN",
+          "query": "",
+          "alias": "",
+          "color": "#6ED0E0",
+          "pin": true,
+          "enable": true,
+          "field": "netflow.l4_dst_port",
+          "size": 10,
+          "union": "AND"
+        },
+        "3": {
+          "id": 3,
+          "type": "topN",
+          "query": "",
+          "alias": "",
+          "color": "#EF843C",
+          "pin": true,
+          "enable": true,
+          "field": "netflow.l4_src_port",
+          "size": 10,
+          "union": "AND"
+        },
+        "4": {
+          "id": 4,
+          "type": "topN",
+          "query": "",
+          "alias": "",
+          "color": "#E24D42",
+          "pin": true,
+          "enable": true,
+          "field": "netflow.ipv4_src_addr",
+          "size": 10,
+          "union": "AND"
         }
       },
       "ids": [
         0,
-        1
+        1,
+        2,
+        3,
+        4
       ]
     },
     "filter": {
@@ -60,19 +99,19 @@
   },
   "rows": [
     {
-      "title": "Test",
-      "height": "150px",
+      "title": "BytesPerTopIP",
+      "height": "300px",
       "editable": true,
       "collapse": false,
       "collapsable": true,
       "panels": [
         {
-          "span": 12,
+          "span": 6,
           "editable": true,
           "type": "histogram",
           "loadingEditor": false,
-          "mode": "mean",
-          "time_field": "@timestamp",
+          "mode": "total",
+          "time_field": "netflow.first_switched",
           "value_field": "netflow.in_bytes",
           "x-axis": true,
           "y-axis": true,
@@ -85,8 +124,7 @@
           "queries": {
             "mode": "selected",
             "ids": [
-              0,
-              1
+              0
             ]
           },
           "annotate": {
@@ -138,7 +176,236 @@
             "value_type": "individual",
             "query_as_alias": true
           },
-          "title": "Top 10 IP Byte usage"
+          "title": "Bytes Per Top 10 Dst IP"
+        },
+        {
+          "span": 6,
+          "editable": true,
+          "type": "histogram",
+          "loadingEditor": false,
+          "mode": "total",
+          "time_field": "netflow.first_switched",
+          "value_field": "netflow.in_bytes",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_format": "bytes",
+          "grid": {
+            "max": null,
+            "min": 0
+          },
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              4
+            ]
+          },
+          "annotate": {
+            "enable": false,
+            "query": "*",
+            "size": 20,
+            "field": "_type",
+            "sort": [
+              "_score",
+              "desc"
+            ]
+          },
+          "auto_int": true,
+          "resolution": 100,
+          "interval": "5m",
+          "intervals": [
+            "auto",
+            "1s",
+            "1m",
+            "5m",
+            "10m",
+            "30m",
+            "1h",
+            "3h",
+            "12h",
+            "1d",
+            "1w",
+            "1y"
+          ],
+          "lines": true,
+          "fill": 0,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": true,
+          "spyable": true,
+          "zoomlinks": true,
+          "options": true,
+          "legend": true,
+          "show_query": true,
+          "interactive": true,
+          "legend_counts": true,
+          "timezone": "browser",
+          "percentage": false,
+          "zerofill": true,
+          "derivative": false,
+          "tooltip": {
+            "value_type": "individual",
+            "query_as_alias": true
+          },
+          "title": "Bytes Per Top 10 Src IP"
+        }
+      ],
+      "notice": false
+    },
+    {
+      "title": "BytesPerPort",
+      "height": "150px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "span": 6,
+          "editable": true,
+          "type": "histogram",
+          "loadingEditor": false,
+          "mode": "total",
+          "time_field": "netflow.first_switched",
+          "value_field": "netflow.in_bytes",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_format": "bytes",
+          "grid": {
+            "max": null,
+            "min": 0
+          },
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              2
+            ]
+          },
+          "annotate": {
+            "enable": false,
+            "query": "*",
+            "size": 20,
+            "field": "_type",
+            "sort": [
+              "_score",
+              "desc"
+            ]
+          },
+          "auto_int": true,
+          "resolution": 100,
+          "interval": "5m",
+          "intervals": [
+            "auto",
+            "1s",
+            "1m",
+            "5m",
+            "10m",
+            "30m",
+            "1h",
+            "3h",
+            "12h",
+            "1d",
+            "1w",
+            "1y"
+          ],
+          "lines": true,
+          "fill": 0,
+          "linewidth": 3,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": true,
+          "spyable": true,
+          "zoomlinks": true,
+          "options": true,
+          "legend": true,
+          "show_query": true,
+          "interactive": true,
+          "legend_counts": true,
+          "timezone": "browser",
+          "percentage": false,
+          "zerofill": true,
+          "derivative": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true
+          },
+          "title": "Bytes Per Top 10 Dst Ports"
+        },
+        {
+          "span": 6,
+          "editable": true,
+          "type": "histogram",
+          "loadingEditor": false,
+          "mode": "total",
+          "time_field": "netflow.first_switched",
+          "value_field": "netflow.in_bytes",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_format": "bytes",
+          "grid": {
+            "max": null,
+            "min": 0
+          },
+          "queries": {
+            "mode": "selected",
+            "ids": [
+              3
+            ]
+          },
+          "annotate": {
+            "enable": false,
+            "query": "*",
+            "size": 20,
+            "field": "_type",
+            "sort": [
+              "_score",
+              "desc"
+            ]
+          },
+          "auto_int": true,
+          "resolution": 100,
+          "interval": "5m",
+          "intervals": [
+            "auto",
+            "1s",
+            "1m",
+            "5m",
+            "10m",
+            "30m",
+            "1h",
+            "3h",
+            "12h",
+            "1d",
+            "1w",
+            "1y"
+          ],
+          "lines": true,
+          "fill": 0,
+          "linewidth": 3,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": true,
+          "spyable": true,
+          "zoomlinks": true,
+          "options": true,
+          "legend": true,
+          "show_query": true,
+          "interactive": true,
+          "legend_counts": true,
+          "timezone": "browser",
+          "percentage": false,
+          "zerofill": true,
+          "derivative": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true
+          },
+          "title": "Bytes Per Top 10 Src Ports"
         }
       ],
       "notice": false
@@ -155,8 +422,8 @@
           "editable": true,
           "type": "histogram",
           "loadingEditor": false,
-          "mode": "mean",
-          "time_field": "@timestamp",
+          "mode": "total",
+          "time_field": "netflow.first_switched",
           "value_field": "netflow.in_bytes",
           "x-axis": true,
           "y-axis": true,
@@ -182,9 +449,9 @@
               "desc"
             ]
           },
-          "auto_int": false,
+          "auto_int": true,
           "resolution": 100,
-          "interval": "1m",
+          "interval": "5m",
           "intervals": [
             "auto",
             "1s",
@@ -229,7 +496,7 @@
           "type": "histogram",
           "loadingEditor": false,
           "mode": "total",
-          "time_field": "@timestamp",
+          "time_field": "netflow.first_switched",
           "value_field": "netflow.in_pkts",
           "x-axis": true,
           "y-axis": true,
@@ -330,9 +597,9 @@
             "netflow.in_bytes",
             "netflow.in_pkts",
             "netflow.ipv4_dst_addr",
-            "netflow.ipv4_src_addr",
             "netflow.l4_dst_port",
             "netflow.l4_src_port",
+            "netflow.ipv4_src_addr",
             "netflow.tcp_flags"
           ],
           "highlight": [],
@@ -344,7 +611,10 @@
             "mode": "all",
             "ids": [
               0,
-              1
+              1,
+              2,
+              3,
+              4
             ]
           },
           "field_list": false,
@@ -387,7 +657,7 @@
   "pulldowns": [
     {
       "type": "query",
-      "collapse": true,
+      "collapse": false,
       "notice": false,
       "query": "*",
       "pinned": true,
