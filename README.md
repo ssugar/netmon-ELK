@@ -44,7 +44,25 @@ If not using Vagrant and Chef, run the following commands on a fresh debian/ubun
 
 ###Access Web Portal###
     http://server_ip/kibana
-===================================
-##Testing##
-###softflow testing###
+
+###HyperV Promiscuous Mode point to VM###
+Set up the virtual machine running netflow as the destination for port mirroring data (run in powershell on the hyperv host).  [Original article](http://www.cloudbase.it/hyper-v-promiscuous-mode/)
+
+	Set-VMNetworkAdapter vmName -PortMirroring Destination
+
+Set up the hosts virtual switch as the source of port mirroring data. 
+
+Get this [powershell module](https://github.com/cloudbase/unattended-setup-scripts/blob/master/VMSwitchPortMonitorMode.psm1)
+
+    Import-Module .\VMSwitchPortMonitorMode.psm1
+	Set-VMSwitchPortMonitorMode -SwitchName switchName -MonitorMode Source
+	
+Check a switch's port monitoring status
+
+    Get-VMSwitchPortMonitoringMode switchName
+	
+Disable the port mirroring for a switch
+
+	Set-VMSwitchPortMonitorMode -SwitchName switchName -MonitorMode None
+	
 
