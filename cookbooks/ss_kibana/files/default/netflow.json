@@ -100,7 +100,7 @@
   "rows": [
     {
       "title": "BytesPerTopIP",
-      "height": "300px",
+      "height": "200px",
       "editable": true,
       "collapse": false,
       "collapsable": true,
@@ -256,7 +256,7 @@
     },
     {
       "title": "BytesPerPort",
-      "height": "150px",
+      "height": "200px",
       "editable": true,
       "collapse": false,
       "collapsable": true,
@@ -412,7 +412,7 @@
     },
     {
       "title": "Graph",
-      "height": "250px",
+      "height": "200px",
       "editable": true,
       "collapse": false,
       "collapsable": true,
