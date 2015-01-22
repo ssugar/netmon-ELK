@@ -30,8 +30,8 @@ SCRIPT
 
 $script2 = <<SCRIPT
 cp /home/vagrant/logstash.conf /etc/logstash/conf.d/logstash.conf
-cp /home/vagrant/drayteksyslog.json /usr/share/nginx/www/kibana/app/dashboards/default.json
-cp /home/vagrant/netflow.json /usr/share/nginx/www/kibana/app/dashboards/netflow.json
+cp /home/vagrant/netflow.json /usr/share/nginx/www/kibana/app/dashboards/default.json
+cp /home/vagrant/drayteksyslog.json /usr/share/nginx/www/kibana/app/dashboards/drayteksyslog.json
 cd /home/vagrant
 service nginx restart
 service logstash restart
