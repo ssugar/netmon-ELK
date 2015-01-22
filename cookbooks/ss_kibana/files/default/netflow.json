@@ -593,14 +593,11 @@
           },
           "overflow": "min-height",
           "fields": [
-            "netflow.flow_seq_num",
-            "netflow.in_bytes",
-            "netflow.in_pkts",
-            "netflow.ipv4_dst_addr",
-            "netflow.l4_dst_port",
-            "netflow.l4_src_port",
-            "netflow.ipv4_src_addr",
-            "netflow.tcp_flags"
+            "netflow.first_switched",
+            "dstip",
+            "geoipdst.city_name",
+            "srcip",
+            "geoipsrc.city_name"
           ],
           "highlight": [],
           "sortable": true,
@@ -657,7 +654,7 @@
   "pulldowns": [
     {
       "type": "query",
-      "collapse": false,
+      "collapse": true,
       "notice": false,
       "query": "*",
       "pinned": true,

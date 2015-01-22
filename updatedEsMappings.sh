@@ -19,6 +19,8 @@ curl -4 -v -XPUT http://localhost:9200/_template/logstash_per_index -d '{
               "@type":        { "index": "not_analyzed", "type": "string" },
               "source":       { "index": "not_analyzed", "type": "string" },
               "destination":  { "index": "not_analyzed", "type": "string" },
+              "srcip":       { "index": "not_analyzed", "type": "string" },
+              "dstip":  { "index": "not_analyzed", "type": "string" },
               "groupName":    { "index": "not_analyzed", "type": "string" },
               "lastLoginName":  { "index": "not_analyzed", "type": "string" },
               "Machine_GroupID":  { "index": "not_analyzed", "type": "string" },
@@ -64,6 +66,24 @@ curl -4 -v -XPUT http://localhost:9200/_template/logstash_per_index -d '{
                    "type": "object"
                },
                "geoip": {
+                   "dynamic": true,
+                   "path": "full",
+                   "properties": {
+                      "city_name": { "index": "not_analyzed", "type": "string"},
+                      "real_region_name": { "index": "not_analyzed", "type": "string"}
+                   },
+                   "type": "object"
+               },
+               "geoipdst": {
+                   "dynamic": true,
+                   "path": "full",
+                   "properties": {
+                      "city_name": { "index": "not_analyzed", "type": "string"},
+                      "real_region_name": { "index": "not_analyzed", "type": "string"}
+                   },
+                   "type": "object"
+               },
+               "geoipsrc": {
                    "dynamic": true,
                    "path": "full",
                    "properties": {
