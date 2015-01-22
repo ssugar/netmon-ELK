@@ -42,6 +42,8 @@ apt-get install softflowd -y
 service softflowd stop
 cp /home/vagrant/softflowd /etc/default/softflowd
 service softflowd start
+echo "Asia/Ho_Chi_Minh" > /etc/timezone
+dpkg-reconfigure --frontend noninteractive tzdata
 SCRIPT
 
 
