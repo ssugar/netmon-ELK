@@ -11,7 +11,7 @@
           "color": "#7EB26D",
           "pin": true,
           "enable": true,
-          "field": "netflow.ipv4_dst_addr",
+          "field": "dstip",
           "size": 10,
           "union": "AND"
         },
@@ -56,7 +56,7 @@
           "color": "#E24D42",
           "pin": true,
           "enable": true,
-          "field": "netflow.ipv4_src_addr",
+          "field": "srcip",
           "size": 10,
           "union": "AND"
         }
@@ -89,11 +89,31 @@
           "active": true,
           "alias": "",
           "id": 1
+        },
+        "2": {
+          "type": "field",
+          "field": "dstip",
+          "query": "\"%{[netflow][ipv4_dst_addr]}\"",
+          "mandate": "mustNot",
+          "active": true,
+          "alias": "",
+          "id": 2
+        },
+        "3": {
+          "type": "field",
+          "field": "srcip",
+          "query": "\"%{[netflow][ipv4_src_addr]}\"",
+          "mandate": "mustNot",
+          "active": true,
+          "alias": "",
+          "id": 3
         }
       },
       "ids": [
         0,
-        1
+        1,
+        2,
+        3
       ]
     }
   },
@@ -585,7 +605,7 @@
           "pages": 5,
           "offset": 0,
           "sort": [
-            "@timestamp",
+            "netflow.first_switched",
             "desc"
           ],
           "style": {
@@ -671,7 +691,7 @@
     {
       "type": "filtering",
       "collapse": true,
-      "notice": true,
+      "notice": false,
       "enable": true
     }
   ],
