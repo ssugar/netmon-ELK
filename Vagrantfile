@@ -10,6 +10,8 @@ sudo su
 echo "deb http://mirror-fpt-telecom.fpt.net/ubuntu/ precise main restricted universe" > /etc/apt/sources.list
 echo "deb http://mirror-fpt-telecom.fpt.net/ubuntu/ precise-updates main restricted universe" >> /etc/apt/sources.list
 echo "deb http://mirror-fpt-telecom.fpt.net/ubuntu/ precise-security main restricted universe" >> /etc/apt/sources.list
+echo "Asia/Ho_Chi_Minh" > /etc/timezone
+dpkg-reconfigure --frontend noninteractive tzdata
 apt-get update
 apt-get install curl -y
 apt-get install nano -y
@@ -42,8 +44,6 @@ apt-get install softflowd -y
 service softflowd stop
 cp /home/vagrant/softflowd /etc/default/softflowd
 service softflowd start
-echo "Asia/Ho_Chi_Minh" > /etc/timezone
-dpkg-reconfigure --frontend noninteractive tzdata
 SCRIPT
 
 
