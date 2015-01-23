@@ -1,7 +1,7 @@
 #netmon-ELK#
 
 ##Description##
-Vagrantfile and Chef recipes to deploy the ELK stack [Elasticsearch, Logstash, and Kibana](http://www.elasticsearch.org/overview/) for use as a Netmon and Syslog analysis tool.
+Vagrantfile to deploy the ELK stack [Elasticsearch, Logstash, and Kibana](http://www.elasticsearch.org/overview/) for use as a Netmon and Syslog analysis tool.
 
 ===================================
 ##Setup without Vagrant##
