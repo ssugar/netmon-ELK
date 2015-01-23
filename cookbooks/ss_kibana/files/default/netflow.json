@@ -107,13 +107,43 @@
           "active": true,
           "alias": "",
           "id": 3
+        },
+        "4": {
+          "type": "field",
+          "field": "netflow.l4_dst_port",
+          "query": "\"53\"",
+          "mandate": "mustNot",
+          "active": true,
+          "alias": "",
+          "id": 4
+        },
+        "5": {
+          "type": "field",
+          "field": "netflow.l4_src_port",
+          "query": "\"53\"",
+          "mandate": "mustNot",
+          "active": true,
+          "alias": "",
+          "id": 5
+        },
+        "6": {
+          "type": "field",
+          "field": "netflow.flow_seq_num",
+          "query": "\"0\"",
+          "mandate": "mustNot",
+          "active": true,
+          "alias": "",
+          "id": 6
         }
       },
       "ids": [
         0,
         1,
         2,
-        3
+        3,
+        4,
+        5,
+        6
       ]
     }
   },
@@ -848,7 +878,7 @@
           "title": "Documents",
           "all_fields": false,
           "localTime": true,
-          "timeField": "@timestamp"
+          "timeField": "netflow.first_switched"
         }
       ],
       "notice": false
@@ -856,7 +886,7 @@
   ],
   "editable": true,
   "index": {
-    "interval": "none",
+    "interval": "day",
     "pattern": "[logstash-]YYYY.MM.DD",
     "default": "_all",
     "warm_fields": false
