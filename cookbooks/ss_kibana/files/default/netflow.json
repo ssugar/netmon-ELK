@@ -33,7 +33,7 @@
           "pin": true,
           "enable": true,
           "field": "netflow.l4_dst_port",
-          "size": 10,
+          "size": 20,
           "union": "AND"
         },
         "3": {
@@ -45,7 +45,7 @@
           "pin": true,
           "enable": true,
           "field": "netflow.l4_src_port",
-          "size": 10,
+          "size": 20,
           "union": "AND"
         },
         "4": {
@@ -134,6 +134,15 @@
           "active": true,
           "alias": "",
           "id": 6
+        },
+        "7": {
+          "type": "field",
+          "field": "netflow.flow_seq_num",
+          "query": "\"15\"",
+          "mandate": "mustNot",
+          "active": true,
+          "alias": "",
+          "id": 7
         }
       },
       "ids": [
@@ -143,7 +152,8 @@
         3,
         4,
         5,
-        6
+        6,
+        7
       ]
     }
   },
@@ -156,7 +166,44 @@
       "collapsable": true,
       "panels": [
         {
-          "span": 6,
+          "error": false,
+          "span": 2,
+          "editable": true,
+          "type": "terms",
+          "loadingEditor": false,
+          "field": "netflow.protocol",
+          "exclude": [],
+          "missing": false,
+          "other": false,
+          "size": 10,
+          "order": "count",
+          "style": {
+            "font-size": "10pt"
+          },
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "arrangement": "horizontal",
+          "chart": "pie",
+          "counter_pos": "none",
+          "spyable": true,
+          "queries": {
+            "mode": "all",
+            "ids": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          "tmode": "terms",
+          "tstat": "total",
+          "valuefield": "",
+          "title": "Protocol"
+        },
+        {
+          "span": 4,
           "editable": true,
           "type": "histogram",
           "loadingEditor": false,
@@ -229,7 +276,7 @@
           "title": "Bytes In"
         },
         {
-          "span": 6,
+          "span": 4,
           "editable": true,
           "type": "histogram",
           "loadingEditor": false,
@@ -300,6 +347,43 @@
             "query_as_alias": true
           },
           "title": "Packets In"
+        },
+        {
+          "error": false,
+          "span": 2,
+          "editable": true,
+          "type": "terms",
+          "loadingEditor": false,
+          "field": "netflow.tcp_flags",
+          "exclude": [],
+          "missing": false,
+          "other": false,
+          "size": 10,
+          "order": "count",
+          "style": {
+            "font-size": "10pt"
+          },
+          "donut": false,
+          "tilt": false,
+          "labels": true,
+          "arrangement": "horizontal",
+          "chart": "pie",
+          "counter_pos": "none",
+          "spyable": true,
+          "queries": {
+            "mode": "all",
+            "ids": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          "tmode": "terms",
+          "tstat": "total",
+          "valuefield": "",
+          "title": "TCP Flags"
         }
       ],
       "notice": false
@@ -385,7 +469,7 @@
             "count": false,
             "min": true,
             "max": true,
-            "mean": true,
+            "mean": false,
             "std_deviation": false,
             "sum_of_squares": false,
             "total": true,
@@ -679,7 +763,7 @@
           "type": "histogram",
           "loadingEditor": false,
           "mode": "total",
-          "time_field": "netflow.first_switched",
+          "time_field": "netflow.last_switched",
           "value_field": "netflow.in_bytes",
           "x-axis": true,
           "y-axis": true,
@@ -928,7 +1012,7 @@
     {
       "type": "filtering",
       "collapse": true,
-      "notice": false,
+      "notice": true,
       "enable": true
     }
   ],
