@@ -53,6 +53,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    #Set the vm name
    config.vm.define :netmonELK do |t|
    end
+
+   config.vm.provider :hyperv do |v|
+	 v.vmname = "netmonELK"
+     v.memory = 2048
+	 v.cpus = 2
+   end
    
    #copy the ELK installer files locally to save time
    config.vm.provision "file", source: "./localELK/elasticsearch-1.4.2.deb", destination: "/home/vagrant/elasticsearch-1.4.2.deb"
