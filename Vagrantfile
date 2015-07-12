@@ -7,9 +7,9 @@ VAGRANTFILE_API_VERSION = "2"
 #script to set everything up. chef is slow to download now while the AAG line is cut so only using vagrant provisioners to speed development up
 $script = <<SCRIPT
 sudo su
-#echo "deb http://mirror-fpt-telecom.fpt.net/ubuntu/ precise main restricted universe" > /etc/apt/sources.list
-#echo "deb http://mirror-fpt-telecom.fpt.net/ubuntu/ precise-updates main restricted universe" >> /etc/apt/sources.list
-#echo "deb http://mirror-fpt-telecom.fpt.net/ubuntu/ precise-security main restricted universe" >> /etc/apt/sources.list
+echo "deb http://mirror-fpt-telecom.fpt.net/ubuntu/ precise main restricted universe" > /etc/apt/sources.list
+echo "deb http://mirror-fpt-telecom.fpt.net/ubuntu/ precise-updates main restricted universe" >> /etc/apt/sources.list
+echo "deb http://mirror-fpt-telecom.fpt.net/ubuntu/ precise-security main restricted universe" >> /etc/apt/sources.list
 echo "Asia/Ho_Chi_Minh" > /etc/timezone
 dpkg-reconfigure --frontend noninteractive tzdata
 apt-get update
