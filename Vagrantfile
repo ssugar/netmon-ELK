@@ -13,19 +13,27 @@ echo "deb http://mirror-fpt-telecom.fpt.net/ubuntu/ precise-security main restri
 echo "Asia/Ho_Chi_Minh" > /etc/timezone
 dpkg-reconfigure --frontend noninteractive tzdata
 apt-get update
-apt-get install curl -y
+apt-get install curl wget -y
 apt-get install nano -y
 apt-get install nginx -y
-apt-get install openjdk-7-jdk -y
+apt-get install openjdk-8-jdk -y
 cd /home/vagrant
-dpkg -i elasticsearch-1.4.2.deb
+dpkg -i elasticsearch-1.7.1.deb
 update-rc.d elasticsearch defaults 95 10
+cp /etc/elasticsearch/elasticsearch.yml /home/vagrant/elasticsearch.yml.bak
 cp /home/vagrant/elasticsearch.yml /etc/elasticsearch/elasticsearch.yml
 service elasticsearch start
-dpkg -i logstash-1.4.2-1.deb
-service logstash restart
-tar -xvzf kibana-latest.tar.gz
-cp -R kibana-latest /usr/share/nginx/www/kibana
+dpkg -i logstash_1.5.3-1_all.deb
+update-rc.d logstash defaults 95 10
+service logstash start
+tar -xvzf kibana-4.1.1-linux-x64.tar.gz
+mkdir -p /opt/kibana
+cp -R kibana-4.1.1-linux-x64/* /opt/kibana/
+wget https://gist.githubusercontent.com/thisismitch/8b15ac909aed214ad04a/raw/bce61d85643c2dcdfbc2728c55a41dab444dca20/kibana4
+cp kibana4 /etc/init.d/kibana4
+chmod +x /etc/init.d/kibana4
+update-rc.d kibana4 defaults 96 9
+service kibana4 start
 SCRIPT
 
 $script2 = <<SCRIPT
@@ -61,10 +69,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    end
    
    #copy the ELK installer files locally to save time
-   config.vm.provision "file", source: "./localELK/elasticsearch-1.4.2.deb", destination: "/home/vagrant/elasticsearch-1.4.2.deb"
+   config.vm.provision "file", source: "./localELK/elasticsearch-1.7.1.deb", destination: "/home/vagrant/elasticsearch-1.7.1.deb"
    config.vm.provision "file", source: "./cookbooks/ss_kibana/files/default/elasticsearch.yml", destination: "/home/vagrant/elasticsearch.yml"
-   config.vm.provision "file", source: "./localELK/logstash-1.4.2-1.deb", destination: "/home/vagrant/logstash-1.4.2-1.deb"
-   config.vm.provision "file", source: "./localELK/kibana-latest.tar.gz", destination: "/home/vagrant/kibana-latest.tar.gz"
+   config.vm.provision "file", source: "./localELK/logstash_1.5.3-1_all.deb", destination: "/home/vagrant/logstash_1.5.3-1_all.deb"
+   config.vm.provision "file", source: "./localELK/kibana-4.1.1-linux-x64.tar.gz", destination: "/home/vagrant/kibana-4.1.1-linux-x64.tar.gz"
    config.vm.provision "file", source: "./cookbooks/ss_softflowd/files/default/softflowd.conf", destination: "/home/vagrant/softflowd"   
    
    #run the script above
