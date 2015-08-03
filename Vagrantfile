@@ -63,6 +63,7 @@ cd packetbeat-dashboards-1.0.0-beta2/
 ./load.sh
 cd ..
 service packetbeat start
+curl http://elastic.co
 SCRIPT
 
 
