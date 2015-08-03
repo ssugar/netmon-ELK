@@ -48,6 +48,7 @@ SCRIPT
 $script3 = <<SCRIPT
 apt-get install softflowd -y
 service softflowd stop
+cp /etc/default/softflowd /home/vagrant/softflowd.bak
 cp /home/vagrant/softflowd /etc/default/softflowd
 service softflowd start
 dpkg -i packetbeat_1.0.0-beta2_amd64.deb
