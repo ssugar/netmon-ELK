@@ -49,7 +49,10 @@ $script3 = <<SCRIPT
 apt-get install softflowd -y
 service softflowd stop
 cp /etc/default/softflowd /home/vagrant/softflowd.bak
-cp /home/vagrant/softflowd /etc/default/softflowd
+rm /etc/default/softflowd
+touch /etc/default/softflowd
+echo 'INTERFACE="eth0"' >> /etc/default/softflowd
+echo 'OPTIONS="-n 127.0.0.1:5656 -v 9"' >> /etc/default/softflowd
 service softflowd start
 dpkg -i packetbeat_1.0.0-beta2_amd64.deb
 curl -XPUT 'http://localhost:9200/_template/packetbeat' -d@/etc/packetbeat/packetbeat.template.json
