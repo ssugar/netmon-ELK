@@ -16,7 +16,7 @@ apt-get update
 apt-get install curl wget -y
 apt-get install nano -y
 apt-get install nginx -y
-apt-get install openjdk-8-jdk -y
+apt-get install openjdk-7-jdk -y
 cd /home/vagrant
 dpkg -i elasticsearch-1.7.1.deb
 update-rc.d elasticsearch defaults 95 10
@@ -38,8 +38,6 @@ SCRIPT
 
 $script2 = <<SCRIPT
 cp /home/vagrant/logstash.conf /etc/logstash/conf.d/logstash.conf
-cp /home/vagrant/netflow.json /usr/share/nginx/www/kibana/app/dashboards/default.json
-cp /home/vagrant/drayteksyslog.json /usr/share/nginx/www/kibana/app/dashboards/drayteksyslog.json
 cd /home/vagrant
 service nginx restart
 service logstash restart
@@ -52,6 +50,15 @@ apt-get install softflowd -y
 service softflowd stop
 cp /home/vagrant/softflowd /etc/default/softflowd
 service softflowd start
+dpkg -i packetbeat_1.0.0-beta2_amd64.deb
+curl -XPUT 'http://localhost:9200/_template/packetbeat' -d@/etc/packetbeat/packetbeat.template.json
+update-rc.d packetbeat defaults 95 10
+curl -L -O https://download.elastic.co/beats/packetbeat/packetbeat-dashboards-1.0.0-beta2.tar.gz
+tar xzvf packetbeat-dashboards-1.0.0-beta2.tar.gz
+cd packetbeat-dashboards-1.0.0-beta2/
+./load.sh
+cd ..
+service packetbeat start
 SCRIPT
 
 
@@ -73,6 +80,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    config.vm.provision "file", source: "./cookbooks/ss_kibana/files/default/elasticsearch.yml", destination: "/home/vagrant/elasticsearch.yml"
    config.vm.provision "file", source: "./localELK/logstash_1.5.3-1_all.deb", destination: "/home/vagrant/logstash_1.5.3-1_all.deb"
    config.vm.provision "file", source: "./localELK/kibana-4.1.1-linux-x64.tar.gz", destination: "/home/vagrant/kibana-4.1.1-linux-x64.tar.gz"
+   config.vm.provision "file", source: "./localELK/packetbeat_1.0.0-beta2_amd64.deb", destination: "/home/vagrant/packetbeat_1.0.0-beta2_amd64.deb"
    config.vm.provision "file", source: "./cookbooks/ss_softflowd/files/default/softflowd.conf", destination: "/home/vagrant/softflowd"   
    
    #run the script above
@@ -80,8 +88,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
    #copy a few config files into their place post install
    config.vm.provision "file", source: "./cookbooks/ss_logstash/files/default/logstash.conf", destination: "/home/vagrant/logstash.conf"
-   config.vm.provision "file", source: "./cookbooks/ss_kibana/files/default/netflow.json", destination: "/home/vagrant/netflow.json"
-   config.vm.provision "file", source: "./cookbooks/ss_kibana/files/default/drayteksyslog.json", destination: "/home/vagrant/drayteksyslog.json"
 
    #restart the services we just replaced configs for and attempts to set some mappings for elasticsearch.
    config.vm.provision "shell", inline: $script2
