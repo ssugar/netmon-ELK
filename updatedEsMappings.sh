@@ -70,7 +70,8 @@ curl -4 -v -XPUT http://localhost:9200/_template/logstash_per_index -d '{
                    "path": "full",
                    "properties": {
                       "city_name": { "index": "not_analyzed", "type": "string"},
-                      "real_region_name": { "index": "not_analyzed", "type": "string"}
+                      "real_region_name": { "index": "not_analyzed", "type": "string"},
+					  "location": { "type" : "geo_point" }
                    },
                    "type": "object"
                },
@@ -79,7 +80,8 @@ curl -4 -v -XPUT http://localhost:9200/_template/logstash_per_index -d '{
                    "path": "full",
                    "properties": {
                       "city_name": { "index": "not_analyzed", "type": "string"},
-                      "real_region_name": { "index": "not_analyzed", "type": "string"}
+                      "real_region_name": { "index": "not_analyzed", "type": "string"},
+					  "location": { "type" : "geo_point" }
                    },
                    "type": "object"
                },
@@ -88,7 +90,8 @@ curl -4 -v -XPUT http://localhost:9200/_template/logstash_per_index -d '{
                    "path": "full",
                    "properties": {
                       "city_name": { "index": "not_analyzed", "type": "string"},
-                      "real_region_name": { "index": "not_analyzed", "type": "string"}
+                      "real_region_name": { "index": "not_analyzed", "type": "string"},
+					  "location": { "type" : "geo_point" }
                    },
                    "type": "object"
                }
