@@ -19,6 +19,8 @@ curl -4 -v -XPUT http://localhost:9200/_template/logstash_per_index -d '{
               "@type":        { "index": "not_analyzed", "type": "string" },
               "source":       { "index": "not_analyzed", "type": "string" },
               "destination":  { "index": "not_analyzed", "type": "string" },
+              "heading":  { "index": "not_analyzed", "type": "string" },
+              "datetime": 	  { "index": "not_analyzed", "type": "date", "format": "MM/dd/yyyy HH:mm:ss"},			  
               "srcip":       { "index": "not_analyzed", "type": "string" },
               "dstip":  { "index": "not_analyzed", "type": "string" },
               "groupName":    { "index": "not_analyzed", "type": "string" },
